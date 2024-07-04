@@ -3,12 +3,24 @@ import jsPDF from "jspdf";
 import axios from "axios";
 import { StudentProfileContext } from "../StudentProfileController";
 
-const PaymentHistory = () => {
+const StuPayHistory = () => {
   // const [paymentHistory, setPaymentHistory] = useState([]);
   const [paymentDetails, setPaymentDetails] = useState(null);
-const {paymentHistory, setPaymentHistory}=useContext(StudentProfileContext)
+  const {
+    fetchStudentProfile,
+    fetchFeeDetails,
+    fetchPaymentHistory,
+    paymentHistory,
+    fetchCategories
+  } = useContext(StudentProfileContext);
+  useEffect(() => {
+    // fetchStudentProfile();
+    // fetchFeeDetails();
+    fetchPaymentHistory();
+    // fetchCategories();
+  }, []);
   
-console.log(paymentHistory.length)
+
   const fetchPaymentDetails = async (paymentIntentId) => {
     try {
       const response = await axios.get(
@@ -110,7 +122,7 @@ console.log(paymentHistory.length)
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {paymentHistory ? paymentHistory.map((payment) => (
+            {paymentHistory &&  paymentHistory.map((payment) => (
               <tr key={payment._id} className="hover:bg-gray-100">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {payment.paymentIntentId}
@@ -141,9 +153,7 @@ console.log(paymentHistory.length)
                   </button>
                 </td>
               </tr>
-            )):<div className="text-2xl text-red-400 pt-36 text-center">
-            No Payment History Found! Please Make Payment
-            </div>}
+            ))}
           </tbody>
         </table>
       </div>
@@ -183,4 +193,4 @@ console.log(paymentHistory.length)
   );
 };
 
-export default PaymentHistory;
+export default StuPayHistory;

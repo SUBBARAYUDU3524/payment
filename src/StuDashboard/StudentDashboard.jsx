@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { HashLoader } from 'react-spinners';
+import { StudentProfileContext } from '../StudentProfileController';
 
 const StudentDashboard = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+ 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {

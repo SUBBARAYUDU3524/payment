@@ -68,6 +68,7 @@ const [allcatoryamount,setAllcatoryamount]=useState(0)
     }
   };
 
+
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
@@ -97,9 +98,15 @@ const [allcatoryamount,setAllcatoryamount]=useState(0)
     }, 0);
     return totalpaidAmount;
   };
-
- setAllcatoryamount(calculateTotalCategoryAmount());
- setPaymountallamount(calculatetotalpaymentpaid());
+  useEffect(() => {
+    const totalCategoryAmount = calculateTotalCategoryAmount();
+    const totalPaymentPaid = calculatetotalpaymentpaid();
+  
+    setAllcatoryamount(totalCategoryAmount);
+    setPaymountallamount(totalPaymentPaid);
+  
+    console.log(allcatoryamount); // This will log the correct value after the state is updated
+  }, [categories, paymentHistory]); 
 console.log(allcatoryamount)
   const logout = () => {
     setStudentProfile({});
@@ -123,6 +130,8 @@ console.log(allcatoryamount)
   return (
     <StudentProfileContext.Provider
       value={{
+        fetchPaymentHistory,
+        fetchCategories,
         paymountallamount,
         allcatoryamount,
         categories,

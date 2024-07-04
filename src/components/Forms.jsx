@@ -52,7 +52,7 @@ const Forms = () => {
       localStorage.setItem("fees", JSON.stringify(fees));
       await fetchStudentProfile();
       await fetchFeeDetails();
-      await fetchPaymentHistory();
+   await fetchCategories();
       await fetchCategories();
       navigate("/stu-dashboard");
     } catch (err) {

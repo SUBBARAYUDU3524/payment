@@ -56,7 +56,7 @@ const StuFeeDetails = () => {
       ) : (
         <>
           <ul className="m-7 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-9">
-            { currentItems>0 ? currentItems.map((fee) => (
+            {  currentItems.map((fee) => (
               <li
                 key={fee._id}
                 className="p-4 border  rounded shadow-lg hover:shadow-xl bg-black text-white transition duration-300 ease-in-out transform hover:scale-105"
@@ -71,7 +71,7 @@ const StuFeeDetails = () => {
                 <p className="text-white">Paid Fees: {fee.paidFees}</p>
                 <p className="text-white">Pending Fees: {fee.pendingFees}</p>
               </li>
-            )):<div className="text-red-500 text-2xl flex justify-center items-center">No Fee Details Found! Please make payments to see you fee details</div>}
+            ))}
           </ul>
           {/* Pagination controls */}
           <div className="flex justify-center mt-4">
