@@ -1,0 +1,82 @@
+/* Slidebar.css */
+
+/* Hide default scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  background: transparent; /* make scrollbar transparent */
+}
+
+/* Hide scrollbar for IE and Edge */
+.scrollbar-hide {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+
+/* Custom scrollbar for webkit browsers */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #2d3748; /* match with sidebar background */
+}
+
+/* Handle */
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #4a5568; /* slightly lighter than sidebar background */
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: #718096; /* slightly lighter on hover */
+}
+
+/* Adding a gap between main items */
+.main-item {
+  margin-bottom: 1rem;
+}
+
+/* Adding a gap between dropdown items */
+.dropdown-item {
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-item {
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+/* src/components/Slidebar.css */
+
+.neumorphism {
+  background: #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 20px 20px 60px #bebebe,
+              -20px -20px 60px #ffffff;
+}
+.slidebar-container {
+  width: 250px;
+  height: calc(100vh - 40px); /* adjust as needed */
+  overflow-y: auto;
+}
+
+.slidebar-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.slidebar-container::-webkit-scrollbar-thumb {
+  background-color: #4a5568; /* gray-600 */
+  border-radius: 10px;
+}
+
+.slidebar-container::-webkit-scrollbar-thumb:hover {
+  background-color: #2d3748; /* gray-700 */
+}
+
+.slidebar-container::-webkit-scrollbar-track {
+  background-color: #1a202c; /* gray-900 */
+}
+

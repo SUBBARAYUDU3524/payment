@@ -1,0 +1,19 @@
+{
+    "name": "college fee management ",
+    "short_name": "Fee management",
+    "icons": [
+      {
+        "src": "icon.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "serviceworker": {
+      "src": "service-worker.js",
+      "scope": "/",
+      "type": "module"
+    }
+  }
+  

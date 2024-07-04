@@ -1,0 +1,62 @@
+/* Forms.css */
+.neumorphic {
+    background: #d1d9e6;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #b0b8c4, -10px -10px 20px #f2faff;
+    padding: 2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .neumorphic:hover {
+    box-shadow: 8px 8px 16px #b0b8c4, -8px -8px 16px #f2faff;
+    transform: translateY(-3px);
+  }
+  
+  .neumorphic-input {
+    background: #d1d9e6;
+    border-radius: 10px;
+    box-shadow: inset 5px 5px 10px #b0b8c4, inset -5px -5px 10px #f2faff;
+    padding: 0.75rem 1rem;
+    border: none;
+    outline: none;
+    color: #333;
+  }
+  
+  .neumorphic-input:focus {
+    box-shadow: inset 4px 4px 8px #b0b8c4, inset -4px -4px 8px #f2faff;
+  }
+  
+  .neumorphic-button {
+    background: #d1d9e6;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #b0b8c4, -5px -5px 10px #f2faff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: #333;
+  }
+  
+  .neumorphic-button:hover {
+    box-shadow: 4px 4px 8px #b0b8c4, -4px -4px 8px #f2faff;
+    transform: translateY(-2px);
+  }
+  
+  .neumorphic-label {
+    background: #d1d9e6;
+    border-radius: 10px;
+    box-shadow: inset 5px 5px 10px #b0b8c4, inset -5px -5px 10px #f2faff;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #333;
+  }
+  
+  .neumorphic-icon {
+    color: #333;
+    box-shadow: 5px 5px 10px #b0b8c4, -5px -5px 10px #f2faff;
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+  

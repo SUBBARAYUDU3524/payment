@@ -1,0 +1,33 @@
+/* Dashboard.css */
+
+/* Custom scrollbar for webkit browsers */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #2d3748; /* match with sidebar background */
+}
+
+/* Handle */
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #4a5568; /* slightly lighter than sidebar background */
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: #718096; /* slightly lighter on hover */
+}
+
+/* Hide default scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
