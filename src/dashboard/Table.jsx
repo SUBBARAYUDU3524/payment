@@ -4,7 +4,6 @@ import jsPDF from "jspdf";
 import axios from "axios";
 import { StudentProfileContext } from "../StudentProfileController";
 
-
 const Table = () => {
   const { paymentHistory } = useContext(StudentProfileContext);
   const [paymentDetails, setPaymentDetails] = useState(null);
@@ -12,7 +11,7 @@ const Table = () => {
   const fetchPaymentDetails = async (paymentIntentId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/payments/details/${paymentIntentId}`,
+        `https://svu-payment-system.onrender.com/api/payments/details/${paymentIntentId}`,
         {
           headers: {
             "y-auth-token": localStorage.getItem("studenttoken"),
@@ -24,8 +23,6 @@ const Table = () => {
       console.error("Error fetching payment details:", error);
     }
   };
-
-  
 
   return (
     <div className="container mx-auto p-4 bg-slate-300 h-screen">
@@ -46,7 +43,6 @@ const Table = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
                 Date
               </th>
-       
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -64,7 +60,6 @@ const Table = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {new Date(payment.date).toLocaleString()}
                 </td>
-                
               </tr>
             ))}
           </tbody>

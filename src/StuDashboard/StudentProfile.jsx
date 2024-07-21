@@ -1,10 +1,12 @@
-import React, { useContext, useState } from 'react';
-import axios from 'axios';
-import { FaUserEdit } from 'react-icons/fa';
-import { StudentProfileContext } from '../StudentProfileController';
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { FaUserEdit } from "react-icons/fa";
+import { StudentProfileContext } from "../StudentProfileController";
 
 const StudentProfile = () => {
-  const { studentProfile, setStudentProfile } = useContext(StudentProfileContext);
+  const { studentProfile, setStudentProfile } = useContext(
+    StudentProfileContext
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [studentData, setStudentData] = useState({
     name: studentProfile.name,
@@ -13,6 +15,23 @@ const StudentProfile = () => {
     admissionNo: studentProfile.admissionNo,
     courseName: studentProfile.courseName,
   });
+
+  const slogans = [
+    "Learning never exhausts the mind.",
+    "Education is the key to success.",
+    "Knowledge is power.",
+    "Believe in yourself.",
+    "Strive for progress, not perfection.",
+  ];
+
+  const [currentSlogan, setCurrentSlogan] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlogan((prev) => (prev + 1) % slogans.length);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [slogans.length]);
 
   const handleEditClick = () => {
     setIsModalOpen(true);
@@ -26,21 +45,22 @@ const StudentProfile = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put('http://localhost:5000/api/students/profile', studentData, {
-        headers: {
-          'y-auth-token': localStorage.getItem('studenttoken'),
-        },
-      });
+      const response = await axios.put(
+        "https://svu-payment-system.onrender.com/api/students/profile",
+        studentData,
+        {
+          headers: {
+            "y-auth-token": localStorage.getItem("studenttoken"),
+          },
+        }
+      );
       setIsModalOpen(false);
       setStudentProfile({
-        name: response.data.name,
-        email: response.data.email,
-        phone: response.data.phone,
-        admissionNo: response.data.admissionNo,
-        courseName: response.data.courseName,
+        ...studentProfile,
+        ...response.data,
       });
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error("Error updating profile:", error);
     }
   };
 
@@ -48,7 +68,7 @@ const StudentProfile = () => {
     <div className="min-h-screen bg-gradient-to-r from-blue-400 to-green-400 flex items-center justify-center">
       <div className="max-w-4xl w-full mx-auto p-6 bg-white rounded-xl shadow-md">
         <h1 className="text-center text-2xl font-bold text-purple-700 mb-6">
-          Student Profile 
+          Student Profile
         </h1>
 
         {isModalOpen && (
@@ -88,7 +108,9 @@ const StudentProfile = () => {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="mb-2 font-semibold">Admission Number</label>
+                    <label className="mb-2 font-semibold">
+                      Admission Number
+                    </label>
                     <input
                       type="text"
                       name="admissionNo"
@@ -109,8 +131,16 @@ const StudentProfile = () => {
                   </div>
                 </div>
                 <div className="modal-action">
-                  <button type="submit" className="btn btn-primary">Save Changes</button>
-                  <button type="button" className="btn" onClick={() => setIsModalOpen(false)}>Cancel</button>
+                  <button type="submit" className="btn btn-primary">
+                    Save Changes
+                  </button>
+                  <button
+                    type="button"
+                    className="btn"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </form>
             </div>
@@ -120,8 +150,12 @@ const StudentProfile = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white p-4 rounded-xl shadow-md flex flex-col items-center">
             <FaUserEdit className="h-32 w-32 rounded-full text-gray-400" />
-            <h2 className="text-xl font-medium text-black mt-4">{studentProfile.name}</h2>
-            <p className="text-gray-500 mt-2">Student Admission No: {studentProfile.admissionNo}</p>
+            <h2 className="text-xl font-medium text-black mt-4">
+              {studentProfile.name}
+            </h2>
+            <p className="text-gray-500 mt-2">
+              Student Admission No: {studentProfile.admissionNo}
+            </p>
             <p className="text-gray-500">Course: {studentProfile.courseName}</p>
             <button
               onClick={handleEditClick}
@@ -137,7 +171,9 @@ const StudentProfile = () => {
               <tbody className="text-black">
                 <tr>
                   <td className="border px-4 py-2">Admission Number</td>
-                  <td className="border px-4 py-2">{studentProfile.admissionNo}</td>
+                  <td className="border px-4 py-2">
+                    {studentProfile.admissionNo}
+                  </td>
                 </tr>
                 <tr>
                   <td className="border px-4 py-2">Email</td>
@@ -153,16 +189,18 @@ const StudentProfile = () => {
                 </tr>
                 <tr>
                   <td className="border px-4 py-2">Course Name</td>
-                  <td className="border px-4 py-2">{studentProfile.courseName}</td>
+                  <td className="border px-4 py-2">
+                    {studentProfile.courseName}
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div className="md:col-span-2 bg-white p-4 rounded-xl shadow-md text-black">
-            <h3 className="text-lg font-bold mb-4">Other Information</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <h3 className="text-lg font-bold mb-4">Inspiration</h3>
+            <p className="text-center text-xl font-semibold">
+              {slogans[currentSlogan]}
             </p>
           </div>
         </div>

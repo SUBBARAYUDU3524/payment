@@ -1,41 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { AdminContext } from "../AdminContext";
 
 const MyProfile = () => {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", secretKey: "" });
+  const { fetchProfile, form, setForm } = useContext(AdminContext);
+
   const [isEditing, setIsEditing] = useState(false);
-  const adminid = JSON.parse(localStorage.getItem("admindetails")).id;
 
   useEffect(() => {
     fetchProfile();
   }, []);
-
-  const fetchProfile = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/admin/profile/${adminid}`, {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
-      setForm(response.data);
-    } catch (error) {
-      console.error("Error fetching admin profile:", error);
-    }
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, adminid) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/admin/profile/${adminid}`, form, {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
+      await axios.put(
+        `https://svu-payment-system.onrender.com/api/admin/profile/${adminid}`,
+        form,
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       setIsEditing(false);
       fetchProfile();
     } catch (error) {
@@ -46,7 +38,7 @@ const MyProfile = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6 text-black">
       <h1 className="text-3xl font-bold mb-6 text-center">My Profile</h1>
-      
+
       <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
         <div className="mb-4">
           <h2 className="text-gray-700">Name</h2>
@@ -77,8 +69,10 @@ const MyProfile = () => {
       {isEditing && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-6 text-center">Edit Profile</h2>
-            <form onSubmit={handleSubmit}>
+            <h2 className="text-2xl font-bold mb-6 text-center">
+              Edit Profile
+            </h2>
+            <form onSubmit={(e) => handleSubmit(e, form._id)}>
               <div className="mb-4">
                 <label className="block text-gray-700">Name</label>
                 <input
@@ -86,7 +80,7 @@ const MyProfile = () => {
                   name="name"
                   value={form.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
+                  className="w-full px-4 py-2 border text-white rounded-lg focus:outline-none"
                   required
                 />
               </div>
@@ -97,7 +91,7 @@ const MyProfile = () => {
                   name="email"
                   value={form.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
+                  className="w-full px-4 py-2 border text-white rounded-lg focus:outline-none"
                   required
                 />
               </div>
@@ -108,20 +102,8 @@ const MyProfile = () => {
                   name="phone"
                   value={form.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
+                  className="w-full px-4 py-2 border text-white rounded-lg focus:outline-none"
                   required
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={form.password}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
-                  required
-                  disabled={isEditing}
                 />
               </div>
               <div className="mb-4">
@@ -131,13 +113,16 @@ const MyProfile = () => {
                   name="secretKey"
                   value={form.secretKey}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
+                  className="w-full px-4 py-2 border text-white rounded-lg focus:outline-none"
                   required
-                  disabled={isEditing}
+                  disabled
                 />
               </div>
               <div className="flex justify-between">
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                >
                   Save
                 </button>
                 <button

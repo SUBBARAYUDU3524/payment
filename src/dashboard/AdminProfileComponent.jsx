@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { AdminContext } from "../AdminContext";
 
 function AdminProfileComponent() {
-  const [admins, setAdmins] = useState([]);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", secretKey: "" });
+  const { fetchAdmins, admins, setAdmins } = useContext(AdminContext);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    secretKey: "",
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -12,19 +19,6 @@ function AdminProfileComponent() {
   useEffect(() => {
     fetchAdmins();
   }, []);
-
-  const fetchAdmins = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/admin/profile", {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
-      setAdmins(response.data);
-    } catch (error) {
-      console.error("Error fetching admins:", error);
-    }
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,18 +29,26 @@ function AdminProfileComponent() {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:5000/api/admin/profile/${currentId}`, form, {
-          headers: {
-            "x-auth-token": localStorage.getItem("token"),
-          },
-        });
+        await axios.put(
+          `https://svu-payment-system.onrender.com/api/admin/profile/${currentId}`,
+          form,
+          {
+            headers: {
+              "x-auth-token": localStorage.getItem("token"),
+            },
+          }
+        );
         setIsEditing(false);
       } else {
-        await axios.post("http://localhost:5000/api/admin/profile", form, {
-          headers: {
-            "x-auth-token": localStorage.getItem("token"),
-          },
-        });
+        await axios.post(
+          "https://svu-payment-system.onrender.com/api/admin/profile",
+          form,
+          {
+            headers: {
+              "x-auth-token": localStorage.getItem("token"),
+            },
+          }
+        );
       }
       setForm({ name: "", email: "", phone: "", password: "", secretKey: "" });
       fetchAdmins();
@@ -65,11 +67,14 @@ function AdminProfileComponent() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/admin/profile/${id}`, {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
+      await axios.delete(
+        `https://svu-payment-system.onrender.com/api/admin/profile/${id}`,
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       fetchAdmins();
     } catch (error) {
       console.error("Error deleting admin:", error);
@@ -87,7 +92,10 @@ function AdminProfileComponent() {
       <h1 className="text-3xl font-bold mb-6 text-center">Admin Management</h1>
 
       <div className="flex justify-end mb-4">
-        <button onClick={handleAddClick} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+        <button
+          onClick={handleAddClick}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
           Add Admin
         </button>
       </div>
@@ -112,13 +120,14 @@ function AdminProfileComponent() {
                 <td className="px-4 py-2 border flex space-x-2">
                   <button
                     onClick={() => handleEdit(admin)}
+                    disabled={admin._id === adminid}
                     className="bg-yellow-500 text-white px-2 py-1 rounded-lg hover:bg-yellow-600"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(admin._id)}
-                    disabled={admin._id===adminid}
+                    disabled={admin._id === adminid}
                     className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600"
                   >
                     Delete
@@ -133,7 +142,9 @@ function AdminProfileComponent() {
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg  mt-9 max-w-md mx-auto">
-            <h2 className="text-2xl font-bold mb-4">{isEditing ? "Edit Admin" : "Add Admin"}</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {isEditing ? "Edit Admin" : "Add Admin"}
+            </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-700">Name</label>
@@ -142,7 +153,7 @@ function AdminProfileComponent() {
                   name="name"
                   value={form.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
                   required
                 />
               </div>
@@ -153,7 +164,7 @@ function AdminProfileComponent() {
                   name="email"
                   value={form.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
                   required
                 />
               </div>
@@ -164,7 +175,7 @@ function AdminProfileComponent() {
                   name="phone"
                   value={form.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
                   required
                 />
               </div>
@@ -175,7 +186,7 @@ function AdminProfileComponent() {
                   name="password"
                   value={form.password}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
                   required
                   disabled={isEditing}
                 />
@@ -187,12 +198,16 @@ function AdminProfileComponent() {
                   name="secretKey"
                   value={form.secretKey}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-white"
                   required
+                  disabled={isEditing}
                 />
               </div>
               <div className="flex justify-between">
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                >
                   {isEditing ? "Update" : "Add"}
                 </button>
                 <button
@@ -200,7 +215,13 @@ function AdminProfileComponent() {
                   onClick={() => {
                     setIsEditing(false);
                     setShowModal(false);
-                    setForm({ name: "", email: "", phone: "", password: "", secretKey: "" });
+                    setForm({
+                      name: "",
+                      email: "",
+                      phone: "",
+                      password: "",
+                      secretKey: "",
+                    });
                   }}
                   className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
                 >

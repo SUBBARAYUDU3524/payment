@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { FaIdBadge, FaLock, FaEnvelope } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { StudentProfileContext } from '../StudentProfileController';
+import React, { useState, useContext } from "react";
+import { FaIdBadge, FaLock, FaEnvelope } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { StudentProfileContext } from "../StudentProfileController";
 
 const Forms = () => {
   const navigate = useNavigate();
@@ -10,18 +10,21 @@ const Forms = () => {
     fetchStudentProfile,
     fetchFeeDetails,
     fetchPaymentHistory,
-    fetchCategories
+    fetchCategories,
   } = useContext(StudentProfileContext);
 
   const [studentData, setStudentData] = useState({
-    admissionNo: '',
-    password: '',
+    admissionNo: "",
+    password: "",
   });
 
   const [adminData, setAdminData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
+
+  const [studentLoading, setStudentLoading] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(false);
 
   const handleChange = (e, isStudent) => {
     const { name, value } = e.target;
@@ -40,9 +43,10 @@ const Forms = () => {
 
   const handleStudentSignIn = async (e) => {
     e.preventDefault();
+    setStudentLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://svu-payment-system.onrender.com/api/auth/login",
         studentData
       );
       const { token, user, payments, fees } = res.data;
@@ -52,27 +56,31 @@ const Forms = () => {
       localStorage.setItem("fees", JSON.stringify(fees));
       await fetchStudentProfile();
       await fetchFeeDetails();
-   await fetchCategories();
       await fetchCategories();
+      setStudentLoading(false);
       navigate("/stu-dashboard");
     } catch (err) {
-      console.error('Error during student sign-in:', err.message);
+      console.error("Error during student sign-in:", err.message);
+      setStudentLoading(false);
     }
   };
 
   const handleAdminSignIn = async (e) => {
     e.preventDefault();
+    setAdminLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/admin/login",
+        "https://svu-payment-system.onrender.com/api/auth/admin/login",
         adminData
       );
       const { token, admin } = res.data;
       localStorage.setItem("token", token);
       localStorage.setItem("admindetails", JSON.stringify(admin));
+      setAdminLoading(false);
       navigate("/admin-dashboard");
     } catch (err) {
-      console.error('Error during admin sign-in:', err.message);
+      console.error("Error during admin sign-in:", err.message);
+      setAdminLoading(false);
     }
   };
 
@@ -87,7 +95,10 @@ const Forms = () => {
                 <h2 className="text-center font-bold text-2xl mb-6">STUDENT</h2>
                 <form onSubmit={handleStudentSignIn}>
                   <div className="form-control mb-4">
-                    <label htmlFor="admissionNo" className="label flex items-center">
+                    <label
+                      htmlFor="admissionNo"
+                      className="label flex items-center"
+                    >
                       <FaIdBadge className="mr-2" />
                       <span className="label-text">Admission Number</span>
                     </label>
@@ -102,7 +113,10 @@ const Forms = () => {
                     />
                   </div>
                   <div className="form-control mb-6">
-                    <label htmlFor="password1" className="label flex items-center">
+                    <label
+                      htmlFor="password1"
+                      className="label flex items-center"
+                    >
                       <FaLock className="mr-2" />
                       <span className="label-text">Password</span>
                     </label>
@@ -116,8 +130,12 @@ const Forms = () => {
                       onChange={(e) => handleChange(e, true)}
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary w-full transition duration-300 ease-in-out hover:bg-primary-600">
-                    Sign In
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-full transition duration-300 ease-in-out hover:bg-primary-600"
+                    disabled={studentLoading}
+                  >
+                    {studentLoading ? "Signing In..." : "Sign In"}
                   </button>
                 </form>
               </div>
@@ -146,7 +164,10 @@ const Forms = () => {
                     />
                   </div>
                   <div className="form-control mb-6">
-                    <label htmlFor="password2" className="label flex items-center">
+                    <label
+                      htmlFor="password2"
+                      className="label flex items-center"
+                    >
                       <FaLock className="mr-2" />
                       <span className="label-text">Password</span>
                     </label>
@@ -160,8 +181,12 @@ const Forms = () => {
                       onChange={(e) => handleChange(e, false)}
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary w-full transition duration-300 ease-in-out hover:bg-primary-600">
-                    Sign In
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-full transition duration-300 ease-in-out hover:bg-primary-600"
+                    disabled={adminLoading}
+                  >
+                    {adminLoading ? "Signing In..." : "Sign In"}
                   </button>
                 </form>
               </div>

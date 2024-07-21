@@ -1,20 +1,60 @@
-import React from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import React, { useContext, useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { AdminContext } from "../AdminContext";
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const AdminStuGraph = () => {
-  // Dummy data (replace with actual data)
+  const { fetchStudents, students } = useContext(AdminContext);
+  const [studentCounts, setStudentCounts] = useState({});
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  useEffect(() => {
+    const countStudentsByCourse = () => {
+      const counts = students.reduce((acc, student) => {
+        const { courseName } = student;
+        if (!acc[courseName]) {
+          acc[courseName] = 0;
+        }
+        acc[courseName]++;
+        return acc;
+      }, {});
+      setStudentCounts(counts);
+    };
+
+    countStudentsByCourse();
+  }, [students]);
+
   const data = {
-    labels: ['MCA', 'MBA', 'Mcom', 'MSC'],
+    labels: Object.keys(studentCounts),
     datasets: [
       {
-        label: 'Number of Students',
-        data: [50, 30, 40, 25], // Replace with your actual student counts
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        label: "Number of Students",
+        data: Object.values(studentCounts),
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 2,
         fill: true,
         tension: 0.4, // Add tension for curved lines
@@ -28,22 +68,22 @@ const AdminStuGraph = () => {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Number of Students',
-          color: '#4B5563',
+          text: "Number of Students",
+          color: "#4B5563",
           font: {
             size: 14,
-            weight: 'bold',
+            weight: "bold",
           },
         },
       },
       x: {
         title: {
           display: true,
-          text: 'Groups',
-          color: '#4B5563',
+          text: "Courses",
+          color: "#4B5563",
           font: {
             size: 14,
-            weight: 'bold',
+            weight: "bold",
           },
         },
       },
@@ -52,9 +92,13 @@ const AdminStuGraph = () => {
   };
 
   return (
-    
-    <div className="bg-white rounded-lg shadow p-6" style={{ height: '600px', width: '800px' }}>
-    <h1 className='text-center pb-4 text-lg text-black'>No Of Students In Each Group</h1>
+    <div
+      className="bg-white rounded-lg shadow p-6"
+      style={{ height: "600px", width: "800px" }}
+    >
+      <h1 className="text-center pb-4 text-lg text-black">
+        Number of Students in Each Course
+      </h1>
       <Line data={data} options={options} />
     </div>
   );

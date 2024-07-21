@@ -1,50 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { FaEye, FaUserEdit, FaTrashAlt, FaUser } from 'react-icons/fa';
-import { Modal } from 'react-daisyui';
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { FaEye, FaUserEdit, FaTrashAlt, FaUser } from "react-icons/fa";
+import { Modal } from "react-daisyui";
+import { AdminContext } from "../AdminContext";
 
 const StudentList = () => {
-  const [students, setStudents] = useState([]);
+  const { students, setStudents, fetchStudents } = useContext(AdminContext);
+  console.log(students);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [editStudent, setEditStudent] = useState(null);
   const [viewStudent, setViewStudent] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
-    admissionNo: '',
-    email: '',
-    courseName: '',
-    phone: '',
-    password: ''
+    name: "",
+    admissionNo: "",
+    email: "",
+    courseName: "",
+    phone: "",
+    password: "",
   });
 
   useEffect(() => {
     fetchStudents();
   }, []);
 
-  const fetchStudents = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/admin/students', {
-        headers: {
-          'x-auth-token': localStorage.getItem('token'),
-        }
-      });
-      setStudents(response.data);
-    } catch (error) {
-      console.error('Error fetching students:', error);
-    }
-  };
-
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/admin/students/${userId}`, {
-        headers: {
-          'x-auth-token': localStorage.getItem('admintoken'),
+      await axios.delete(
+        `https://svu-payment-system.onrender.com/api/admin/students/${userId}`,
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
         }
-      });
-      setStudents(students.filter(student => student._id !== userId));
+      );
+      setStudents(students.filter((student) => student._id !== userId));
     } catch (error) {
-      console.error('Error deleting student:', error);
+      console.error("Error deleting student:", error);
     }
   };
 
@@ -57,7 +49,7 @@ const StudentList = () => {
       email: student.email,
       courseName: student.courseName,
       phone: student.phone,
-      password: '' // Ensure this is cleared for security reasons, or handle differently
+      password: "", // Ensure this is cleared for security reasons, or handle differently
     });
   };
 
@@ -70,24 +62,24 @@ const StudentList = () => {
     setEditStudent(null);
     setShowAddModal(true);
     setFormData({
-      name: '',
-      admissionNo: '',
-      email: '',
-      courseName: '',
-      phone: '',
-      password: ''
+      name: "",
+      admissionNo: "",
+      email: "",
+      courseName: "",
+      phone: "",
+      password: "",
     });
   };
 
   const closeModal = () => {
     setShowAddModal(false);
     setFormData({
-      name: '',
-      admissionNo: '',
-      email: '',
-      courseName: '',
-      phone: '',
-      password: ''
+      name: "",
+      admissionNo: "",
+      email: "",
+      courseName: "",
+      phone: "",
+      password: "",
     });
   };
 
@@ -104,22 +96,30 @@ const StudentList = () => {
     e.preventDefault();
     try {
       if (editStudent) {
-        await axios.put(`http://localhost:5000/api/admin/students/${editStudent._id}`, formData, {
-          headers: {
-            'x-auth-token': localStorage.getItem('admintoken'),
+        await axios.put(
+          `https://svu-payment-system.onrender.com/api/admin/students/${editStudent._id}`,
+          formData,
+          {
+            headers: {
+              "x-auth-token": localStorage.getItem("token"),
+            },
           }
-        });
+        );
       } else {
-        await axios.post('http://localhost:5000/api/admin/students/add', formData, {
-          headers: {
-            'x-auth-token': localStorage.getItem('admintoken'),
+        await axios.post(
+          "https://svu-payment-system.onrender.com/api/admin/students/add",
+          formData,
+          {
+            headers: {
+              "x-auth-token": localStorage.getItem("token"),
+            },
           }
-        });
+        );
       }
       fetchStudents();
       closeModal();
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -128,32 +128,48 @@ const StudentList = () => {
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-gray-800">All Students</h1>
-          <button className="btn btn-primary" onClick={handleAddModalOpen}>Add Student</button>
+          <button className="btn btn-primary" onClick={handleAddModalOpen}>
+            Add Student
+          </button>
         </div>
-        <p className="text-gray-600 mb-4">Welcome to Swift application</p>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {students.map((student) => (
-            <div key={student._id} className="card bg-white shadow-md rounded-lg p-4 h-48">
+            <div
+              key={student._id}
+              className="card bg-white shadow-md rounded-lg p-4 h-48"
+            >
               <div className="flex items-center mb-4">
                 <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-300 flex items-center justify-center ml-5">
                   <FaUser className="text-gray-500 text-4xl" />
                 </div>
                 <div className="ml-4">
-                  <h2 className="text-lg font-bold text-gray-800">{student.name}</h2>
+                  <h2 className="text-lg font-bold text-gray-800">
+                    {student.name}
+                  </h2>
                   <p className="text-sm text-gray-600">{student.courseName}</p>
                 </div>
               </div>
               <p className="text-gray-600">
-                <span className="font-semibold">P: </span>{student.phone}
+                <span className="font-semibold">P: </span>
+                {student.phone}
               </p>
               <div className="flex mt-4 space-x-2 text-center justify-center">
-                <button className="text-blue-500 hover:text-blue-700" onClick={() => handleView(student)}>
+                <button
+                  className="text-blue-500 hover:text-blue-700"
+                  onClick={() => handleView(student)}
+                >
                   <FaEye />
                 </button>
-                <button className="text-green-500 hover:text-green-700" onClick={() => handleEdit(student)}>
+                <button
+                  className="text-green-500 hover:text-green-700"
+                  onClick={() => handleEdit(student)}
+                >
                   <FaUserEdit />
                 </button>
-                <button className="text-red-500 hover:text-red-700" onClick={() => handleDelete(student._id)}>
+                <button
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => handleDelete(student._id)}
+                >
                   <FaTrashAlt />
                 </button>
               </div>
@@ -166,10 +182,14 @@ const StudentList = () => {
       {showAddModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-4 rounded-lg shadow-md w-96">
-            <h2 className="text-2xl font-bold mb-4">{editStudent ? 'Edit Student' : 'Add Student'}</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {editStudent ? "Edit Student" : "Add Student"}
+            </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Name
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -181,7 +201,9 @@ const StudentList = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Admission No</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Admission No
+                </label>
                 <input
                   type="text"
                   name="admissionNo"
@@ -193,7 +215,9 @@ const StudentList = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Course Name</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Course Name
+                </label>
                 <input
                   type="text"
                   name="courseName"
@@ -205,7 +229,9 @@ const StudentList = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Email
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -217,7 +243,9 @@ const StudentList = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Phone</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Phone
+                </label>
                 <input
                   type="text"
                   name="phone"
@@ -230,7 +258,9 @@ const StudentList = () => {
               </div>
               {!editStudent && (
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Password
+                  </label>
                   <input
                     type="password"
                     name="password"
@@ -243,8 +273,16 @@ const StudentList = () => {
                 </div>
               )}
               <div className="flex justify-end">
-                <button type="button" onClick={closeModal} className="btn btn-secondary mr-2">Cancel</button>
-                <button type="submit" className="btn btn-primary">{editStudent ? 'Save Changes' : 'Add Student'}</button>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="btn btn-secondary mr-2"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  {editStudent ? "Save Changes" : "Add Student"}
+                </button>
               </div>
             </form>
           </div>
@@ -261,17 +299,32 @@ const StudentList = () => {
                   <FaUser className="text-gray-500 text-5xl" />
                 </div>
                 <div className="text-center">
-                  <h2 className="text-lg font-bold mb-1">NAME : {viewStudent.name}</h2>
-                  <p className="text-lg mb-1">Study : {viewStudent.courseName}</p>
+                  <h2 className="text-lg font-bold mb-1">
+                    NAME : {viewStudent.name}
+                  </h2>
+                  <p className="text-lg mb-1">
+                    Study : {viewStudent.courseName}
+                  </p>
                 </div>
               </div>
-              <p className="mb-2"><span className="font-semibold">Admission No : </span>{viewStudent.admissionNo}</p>
-              <p className="mb-2"><span className="font-semibold">Email : </span>{viewStudent.email}</p>
-              <p className="mb-2"><span className="font-semibold">Phone : </span>{viewStudent.phone}</p>
+              <p className="mb-2">
+                <span className="font-semibold">Admission No : </span>
+                {viewStudent.admissionNo}
+              </p>
+              <p className="mb-2">
+                <span className="font-semibold">Email : </span>
+                {viewStudent.email}
+              </p>
+              <p className="mb-2">
+                <span className="font-semibold">Phone : </span>
+                {viewStudent.phone}
+              </p>
             </div>
           </Modal.Body>
           <Modal.Actions>
-            <button className="btn btn-secondary" onClick={closeViewModal}>Close</button>
+            <button className="btn btn-secondary" onClick={closeViewModal}>
+              Close
+            </button>
           </Modal.Actions>
         </Modal>
       )}

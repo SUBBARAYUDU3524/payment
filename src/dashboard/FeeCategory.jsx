@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const FeeCategory = () => {
   const [categories, setCategories] = useState([]);
-  const [formData, setFormData] = useState({ name: '', description: '', amount: '' });
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    amount: "",
+    course: "",
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
@@ -14,14 +19,17 @@ const FeeCategory = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/category',{
-        headers: {
-            'x-auth-token': localStorage.getItem('token'),
-          }
-      });
+      const response = await axios.get(
+        "https://svu-payment-system.onrender.com/api/category",
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       setCategories(response.data);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error("Error fetching categories:", error);
     }
   };
 
@@ -34,28 +42,36 @@ const FeeCategory = () => {
     e.preventDefault();
     if (isEditing) {
       try {
-        await axios.put(`http://localhost:5000/api/category/${currentId}`, formData,{
+        await axios.put(
+          `https://svu-payment-system.onrender.com/api/category/${currentId}`,
+          formData,
+          {
             headers: {
-            'x-auth-token': localStorage.getItem('token'),
+              "x-auth-token": localStorage.getItem("token"),
+            },
           }
-      });
+        );
         setIsEditing(false);
         setCurrentId(null);
       } catch (error) {
-        console.error('Error updating category:', error);
+        console.error("Error updating category:", error);
       }
     } else {
       try {
-        await axios.post('http://localhost:5000/api/category', formData,{
+        await axios.post(
+          "https://svu-payment-system.onrender.com/api/category",
+          formData,
+          {
             headers: {
-            'x-auth-token': localStorage.getItem('token'),
+              "x-auth-token": localStorage.getItem("token"),
+            },
           }
-        });
+        );
       } catch (error) {
-        console.error('Error adding category:', error);
+        console.error("Error adding category:", error);
       }
     }
-    setFormData({ name: '', description: '', amount: '' });
+    setFormData({ name: "", description: "", amount: "", course: "" });
     fetchCategories();
   };
 
@@ -67,22 +83,40 @@ const FeeCategory = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/category/${id}`,{
-        headers: {
-            'x-auth-token': localStorage.getItem('token'),
-          }
-      });
+      await axios.delete(
+        `https://svu-payment-system.onrender.com/api/category/${id}`,
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       fetchCategories();
     } catch (error) {
-      console.error('Error deleting category:', error);
+      console.error("Error deleting category:", error);
     }
   };
 
   return (
     <div className="container mx-auto p-4 text-black h-screen bg-slate-300 ">
-      <h1 className="text-3xl font-bold mb-6 text-center">Category Management</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        Category Management
+      </h1>
       <form onSubmit={handleSubmit} className="mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <select
+            name="course"
+            value={formData.course}
+            onChange={handleInputChange}
+            className="p-2 border border-gray-300 rounded text-white"
+            required
+          >
+            <option value="">Select Course</option>
+            <option value="MCA">MCA</option>
+            <option value="MSC">MSC</option>
+            <option value="MCOM">MCOM</option>
+            <option value="MBA">MBA</option>
+          </select>
           <input
             type="text"
             name="name"
@@ -112,8 +146,11 @@ const FeeCategory = () => {
           />
         </div>
         <div className="flex justify-center mt-4">
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-            {isEditing ? 'Update Category' : 'Add Category'}
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            {isEditing ? "Update Category" : "Add Category"}
           </button>
         </div>
       </form>
@@ -125,6 +162,7 @@ const FeeCategory = () => {
               <th className="py-2 border-b">Name</th>
               <th className="py-2 border-b">Description</th>
               <th className="py-2 border-b">Amount</th>
+              <th className="py-2 border-b">Course</th>
               <th className="py-2 border-b">Actions</th>
             </tr>
           </thead>
@@ -134,6 +172,7 @@ const FeeCategory = () => {
                 <td className="py-2 border-r">{category.name}</td>
                 <td className="py-2 border-r">{category.description}</td>
                 <td className="py-2 border-r">{category.amount}</td>
+                <td className="py-2 border-r">{category.course}</td>
                 <td className="py-2 flex justify-center space-x-2">
                   <button
                     onClick={() => handleEdit(category)}
