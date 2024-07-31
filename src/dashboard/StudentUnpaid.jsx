@@ -11,7 +11,7 @@ const StudentUnpaid = () => {
   const fetchFees = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/fees/feeslist",
+        "https://svu-payment-system.onrender.com/api/fees/feeslist",
         {
           headers: {
             "x-auth-token": localStorage.getItem("token"),

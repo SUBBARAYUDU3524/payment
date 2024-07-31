@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import StuSlideBar from "./StuSlideBar";
 import StudentProfile from "./StudentProfile";
 import { StudentProfileContext } from "../StudentProfileController";
 import { Route, Routes } from "react-router-dom";
+import { FaBars } from "react-icons/fa";
 import StuReports from "./StuReports";
 import StuBlogger from "./StuBlogger";
 import StuPayHistory from "./StuPayHistory";
@@ -16,23 +17,31 @@ const StuDashboard = () => {
   const { studentProfile, fetchStudentProfile } = useContext(
     StudentProfileContext
   );
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
   useEffect(() => {
     fetchStudentProfile();
   }, []);
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
-      <div>
+      <div className={`transition-transform ${sidebarOpen ? "w-64" : "w-0"}`}>
         <StuSlideBar />
       </div>
-      <div
-        className="flex flex-col items-center bg-red-400
- text-white w-full overflow-hidden"
-      >
-        <h1 className="text-3xl font-bold mb-8 hover:underline mt-5 uppercase">
-          WELCOME {studentProfile.name} !
-        </h1>
-        <div className="flex-grow w-full overflow-y-auto scrollbar-hide">
+      <div className="flex flex-col w-full">
+        <div className="bg-red-500 text-white p-4 flex items-center justify-between">
+          <button onClick={toggleSidebar} className="text-xl">
+            <FaBars />
+          </button>
+          <h1 className="text-3xl font-bold hover:underline uppercase pr-96">
+            WELCOME {studentProfile.name}!
+          </h1>
+        </div>
+        <div className="flex-grow bg-red-400 text-white overflow-y-auto scrollbar-hide">
           <Routes>
             <Route index element={<StudentDashboard />} />
             <Route path="profile" element={<StudentProfile />} />

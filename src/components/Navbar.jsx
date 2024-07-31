@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Navbar.css"; // Make sure to create this file for custom CSS
 
 const Navbar = ({ handleNavLinkClick }) => {
   const handleClick = (message) => {
@@ -9,33 +8,29 @@ const Navbar = ({ handleNavLinkClick }) => {
 
   return (
     <nav className="bg-white shadow-lg py-5">
-      <div className="max-w-screen-lg mx-auto flex items-center justify-between">
+      <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-between flex-wrap">
         {/* Logo Section */}
-        <div className="flex  items-center space-x-8">
-          <Link
-            to="/"
-            className="flex text-left text-lg font-bold text-gray-800"
-          >
+        <div className="flex items-center space-x-4">
+          <Link to="/" className="flex items-center">
             <img
               src="https://svuniversity.edu.in/storage/2021/11/SV-logo.png"
               alt="Logo"
-              className="h-15  -ml-24  w-15"
-            />{" "}
-            {/* Adjust the logo source and size */}
+              className="w-15 h-14 sm:h-14 sm:w-15"
+            />
           </Link>
         </div>
 
         {/* Navigation Links Section */}
-        <div className="flex-grow flex items-center justify-center space-x-8">
+        <div className=" md:flex md:flex-grow items-center justify-center space-x-8">
           <Link
             to="/"
-            className="text-lg font-bold items-center text-gray-800 hover:text-primary transition-colors duration-300"
+            className="text-lg font-bold text-gray-800 hover:text-primary transition-colors duration-300"
           >
             Home
           </Link>
           <Link
             to="/services"
-            className="text-lg font-bold items-center text-gray-800 hover:text-primary transition-colors duration-300"
+            className="text-lg font-bold text-gray-800 hover:text-primary transition-colors duration-300"
           >
             Services
           </Link>
@@ -43,9 +38,8 @@ const Navbar = ({ handleNavLinkClick }) => {
             to="/about"
             className="text-lg font-bold text-gray-800 hover:text-primary transition-colors duration-300"
           >
-            AboutUs
+            About Us
           </Link>
-
           <Link
             to="/contact"
             className="text-lg font-bold text-gray-800 hover:text-primary transition-colors duration-300"
@@ -55,18 +49,18 @@ const Navbar = ({ handleNavLinkClick }) => {
         </div>
 
         {/* Login Section */}
-        <div className=" ml-20 flex items-center space-x-6">
+        <div className="flex items-center space-x-4">
           <Link
             to="/login"
-            className="flex items-center text-lg font-bold text-white bg-primary px-4 py-2 rounded-full transition-colors duration-300"
+            className="text-lg font-bold text-white bg-primary px-4 py-2 rounded-full transition-colors duration-300"
           >
-            <span>Login</span>
+            Login
           </Link>
           <Link
             to="/signup"
-            className="flex items-center text-xl font-bold text-white bg-primary px-4 py-2 rounded-2xl transition-colors duration-300"
+            className="text-lg font-bold text-white bg-primary px-4 py-2 rounded-full transition-colors duration-300"
           >
-            <span>SignUp</span>
+            Sign Up
           </Link>
         </div>
       </div>

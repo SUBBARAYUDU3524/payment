@@ -36,9 +36,7 @@ const PaymentComponent = ({
         </div>
         <div className="flex flex-col md:flex-row justify-center items-center p-10">
           <div className="md:w-1/2 p-5">
-            <h1 className="text-xl font-bold">
-              VENKATESWAR REDDY RAGHAVAREDDY
-            </h1>
+            <h1 className="text-xl font-bold">ALAKUNTA MALLIKAJUNA</h1>
             <h2 className="text-lg font-semibold mt-2">SV UNIVERSITY</h2>
             <div className="mt-4">
               <p>₹ 300 of ₹ 1,00,000 collected</p>

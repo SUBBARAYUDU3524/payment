@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,13 +14,21 @@ import MeetUs from "./components/MeetUs";
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import StuDashboard from "./StuDashboard/StuDashboard";
-
 import ShareComp from "./ShareComp";
 import AdminDashboard from "./dashboard/AdminDashboard";
 import Eachservice from "./components/Eachservice";
+import PrivateRoute from "./PrivateRoute";
+import Footer from "./components/Footer";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import SecurityInformation from "./components/SecurityInformation";
+import FAQ from "./components/FAQ";
+import TermsAndConditions from "./components/TermsAndConditions";
 
 const App = () => {
-  // Function to determine if Navbar should be shown
+  const location = useLocation();
+  const isProtectedRoute =
+    location.pathname.startsWith("/stu-dashboard") ||
+    location.pathname.startsWith("/admin-dashboard");
 
   return (
     <div>
@@ -35,10 +43,35 @@ const App = () => {
           <Route path="/meet" element={<MeetUs />} />
           <Route path="/login" element={<Forms />} />
           <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route
+            path="/security-information"
+            element={<SecurityInformation />}
+          />
         </Route>
-        <Route path="/stu-dashboard/*" element={<StuDashboard />} />
-        <Route path="/admin-dashboard/*" element={<AdminDashboard />}></Route>
+        <Route
+          path="/stu-dashboard/*"
+          element={
+            <PrivateRoute type="student">
+              <StuDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin-dashboard/*"
+          element={
+            <PrivateRoute type="admin">
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
+      {!isProtectedRoute && <Footer />}
     </div>
   );
 };

@@ -32,8 +32,10 @@ const Contact = () => {
     <div className="flex flex-col items-center p-8 bg-gray-800 text-white min-h-screen">
       <h2 className="text-2xl mb-6">Contact Us</h2>
       <p className="text-lg mb-6 text-center">
-        If you have any questions or concerns, feel free to reach out to us. We
-        will get back to you as soon as possible.
+        <p>For any inquiries or support, please reach out to us at:</p>
+        <p>Email: support@svu.edu.in</p>
+        <p>Phone: +91-1234567890</p>
+        <p>Address: SVU Campus, Tirupati, AP, India</p>
       </p>
 
       <form

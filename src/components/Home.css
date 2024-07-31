@@ -35,16 +35,6 @@
   transform: translateY(-50%); /* Vertically center the content */
 }
 
-.hersosection {
-  font-size: 4rem; /* Adjust font size as needed */
-  margin-bottom: 1rem;
-}
-.smallhead {
-  font-size: 1.5rem; /* Adjust font size as needed */
-  margin-bottom: 2rem;
-  color: aliceblue;
-}
-
 .tour-button {
   background-color: #6c63ff; /* Button background color */
   color: white; /* Button text color */

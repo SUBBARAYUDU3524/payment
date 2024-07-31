@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { FaIdBadge, FaLock, FaEnvelope } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { StudentProfileContext } from "../StudentProfileController";
 
@@ -25,6 +25,8 @@ const Forms = () => {
 
   const [studentLoading, setStudentLoading] = useState(false);
   const [adminLoading, setAdminLoading] = useState(false);
+  const [studentAgree, setStudentAgree] = useState(false);
+  const [adminAgree, setAdminAgree] = useState(false);
 
   const handleChange = (e, isStudent) => {
     const { name, value } = e.target;
@@ -112,7 +114,7 @@ const Forms = () => {
                       onChange={(e) => handleChange(e, true)}
                     />
                   </div>
-                  <div className="form-control mb-6">
+                  <div className="form-control mb-4">
                     <label
                       htmlFor="password1"
                       className="label flex items-center"
@@ -130,10 +132,36 @@ const Forms = () => {
                       onChange={(e) => handleChange(e, true)}
                     />
                   </div>
+                  <div className="form-control mb-6">
+                    <label className="cursor-pointer label flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={studentAgree}
+                        onChange={() => setStudentAgree(!studentAgree)}
+                        className="checkbox checkbox-primary mr-2"
+                      />
+                      <span className="label-text">
+                        I agree to the{" "}
+                        <Link
+                          to="/terms-and-conditions"
+                          className="text-blue-500 underline"
+                        >
+                          Terms and Conditions
+                        </Link>{" "}
+                        and{" "}
+                        <Link
+                          to="/privacy-policy"
+                          className="text-blue-500 underline"
+                        >
+                          Privacy Policy
+                        </Link>
+                      </span>
+                    </label>
+                  </div>
                   <button
                     type="submit"
                     className="btn btn-primary w-full transition duration-300 ease-in-out hover:bg-primary-600"
-                    disabled={studentLoading}
+                    disabled={studentLoading || !studentAgree}
                   >
                     {studentLoading ? "Signing In..." : "Sign In"}
                   </button>
@@ -163,7 +191,7 @@ const Forms = () => {
                       onChange={(e) => handleChange(e, false)}
                     />
                   </div>
-                  <div className="form-control mb-6">
+                  <div className="form-control mb-4">
                     <label
                       htmlFor="password2"
                       className="label flex items-center"
@@ -181,10 +209,36 @@ const Forms = () => {
                       onChange={(e) => handleChange(e, false)}
                     />
                   </div>
+                  <div className="form-control mb-6">
+                    <label className="cursor-pointer label flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={adminAgree}
+                        onChange={() => setAdminAgree(!adminAgree)}
+                        className="checkbox checkbox-primary mr-2"
+                      />
+                      <span className="label-text">
+                        I agree to the{" "}
+                        <Link
+                          to="/terms-and-conditions"
+                          className="text-blue-500 underline"
+                        >
+                          Terms and Conditions
+                        </Link>{" "}
+                        and{" "}
+                        <Link
+                          to="/privacy-policy"
+                          className="text-blue-500 underline"
+                        >
+                          Privacy Policy
+                        </Link>
+                      </span>
+                    </label>
+                  </div>
                   <button
                     type="submit"
                     className="btn btn-primary w-full transition duration-300 ease-in-out hover:bg-primary-600"
-                    disabled={adminLoading}
+                    disabled={adminLoading || !adminAgree}
                   >
                     {adminLoading ? "Signing In..." : "Sign In"}
                   </button>

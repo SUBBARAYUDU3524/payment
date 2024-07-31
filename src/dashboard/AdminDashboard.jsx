@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Slidebar from "./Slidebar";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
@@ -21,23 +21,36 @@ import StudentFeesList from "./StudentFeesList";
 import Financial from "./Financial";
 import Widgets from "./Widgets";
 import StudentUnpaid from "./StudentUnpaid";
-// import { AdminContext } from "../AdminContext";
+import { FaBars } from "react-icons/fa";
+import StudentSearchDetails from "./StudentSearchDetails";
 
 const AdminDashboard = () => {
   const { form, fetchProfile } = useContext(AdminContext);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
   useEffect(() => {
     fetchProfile();
   }, []);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
-      <div>
+      <div className={`transition-transform ${sidebarOpen ? "w-64" : "w-0"}`}>
         <Slidebar />
       </div>
-      <div className="flex flex-col items-center bg-red-400 text-white  w-full overflow-hidden">
-        <h1 className="text-4xl font-bold mb-8 hover:underline mt-5 uppercase">
-          welcome {form.name} !
-        </h1>
-        <div className="flex-grow w-full overflow-y-auto scrollbar-hide">
+      <div className="flex flex-col w-full">
+        <div className="bg-red-500 text-white p-4 flex items-center justify-between">
+          <button onClick={toggleSidebar} className="text-xl">
+            <FaBars />
+          </button>
+          <h1 className="text-4xl font-bold hover:underline uppercase pr-96 ">
+            WELCOME {form.name}!
+          </h1>
+        </div>
+        <div className="flex-grow bg-red-400 text-white overflow-y-auto scrollbar-hide">
           <Routes>
             <Route path="/" element={<ADashboard />} index />
             <Route path="/dashboard" element={<ADashboard />} />
@@ -56,6 +69,7 @@ const AdminDashboard = () => {
             <Route path="reports/financial" element={<Financial />} />
             <Route path="widgets/list" element={<Widgets />} />
             <Route path="unpaid" element={<StudentUnpaid />} />
+            <Route path="search" element={<StudentSearchDetails />} />
             <Route
               path="adminrecentpayments"
               element={<AdminRecentPayments />}

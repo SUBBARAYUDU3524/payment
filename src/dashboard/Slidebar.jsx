@@ -22,6 +22,7 @@ import {
   FaSignOutAlt,
   FaPlus,
   FaMinus,
+  FaSearch,
 } from "react-icons/fa";
 import "./Slidebar.css";
 import "tailwindcss/tailwind.css";
@@ -65,6 +66,11 @@ const Slidebar = () => {
       icon: FaRupeeSign,
       label: "StudentUnPaid List",
       link: "/admin-dashboard/unpaid",
+    },
+    {
+      icon: FaSearch,
+      label: "Search",
+      link: "/admin-dashboard/search",
     },
     {
       icon: FaCalendarAlt,
@@ -130,7 +136,7 @@ const Slidebar = () => {
   };
   return (
     <div className="slidebar-container bg-gray-900 text-white   scrollbar-hide scrollbar-custom transition-all duration-500">
-      <div className="sticky top-0 z-10 bg-red-400 p-5  text-center mb-10 shadow-lg">
+      <div className="bg-red-400 p-5  text-center mb-10">
         <h1 className="text-xl font-bold mb-2 text-white">
           Sri Venkateswara University
         </h1>
