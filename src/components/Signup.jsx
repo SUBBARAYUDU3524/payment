@@ -15,6 +15,7 @@ const Signup = () => {
     secretKey: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,6 +28,7 @@ const Signup = () => {
 
   const handleStudentSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.post(
         "https://svu-payment-system.onrender.com/api/auth/signup",
@@ -39,11 +41,14 @@ const Signup = () => {
         "Error during student signup:",
         err.response?.data || err.message
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleAdminSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.post(
         "https://svu-payment-system.onrender.com/api/auth/admin/signup",
@@ -56,6 +61,8 @@ const Signup = () => {
         "Error during admin signup:",
         err.response?.data || err.message
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -280,7 +287,7 @@ const Signup = () => {
           )}
 
           <button type="submit" className="btn btn-primary w-full">
-            Signup
+            {loading ? "Signing up..." : "Signup"}
           </button>
         </form>
       </div>
