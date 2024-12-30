@@ -11,9 +11,7 @@ const Home = () => {
         Your browser does not support the video tag.
       </video>
       <div className="content">
-        <h1 className=" text-7xl mb-9">
-          Sri Venkateswara University Fee Payment System
-        </h1>
+        <h1 className=" text-7xl mb-9">STUDENT FEE COMPLAINCE SYSTEM</h1>
         <p className="text-3xl">Pay Fees Online with Ease!</p>
         <button onClick={() => navigate("/login")} className="tour-button mt-7">
           Pay Here

@@ -13,9 +13,7 @@ const AdminBlogger = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/posts"
-      );
+      const response = await axios.get("http://localhost:5000/api/posts");
       setPosts(response.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -25,13 +23,10 @@ const AdminBlogger = () => {
   const handleCreatePost = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        "https://svu-payment-system.onrender.com/api/posts",
-        {
-          title,
-          content,
-        }
-      );
+      const response = await axios.post("http://localhost:5000/api/posts", {
+        title,
+        content,
+      });
       setPosts([...posts, response.data]);
       setTitle("");
       setContent("");
@@ -42,9 +37,7 @@ const AdminBlogger = () => {
 
   const handleDeletePost = async (id) => {
     try {
-      await axios.delete(
-        `https://svu-payment-system.onrender.com/api/posts/${id}`
-      );
+      await axios.delete(`http://localhost:5000/api/posts/${id}`);
       setPosts(posts.filter((post) => post._id !== id));
     } catch (error) {
       console.error("Error deleting post:", error);

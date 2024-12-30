@@ -16,14 +16,11 @@ const Payment = () => {
     const fetchPayments = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          `https://svu-payment-system.onrender.com/api/payments/all`,
-          {
-            headers: {
-              "x-auth-token": localStorage.getItem("token"),
-            },
-          }
-        );
+        const response = await fetch(`http://localhost:5000/api/payments/all`, {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

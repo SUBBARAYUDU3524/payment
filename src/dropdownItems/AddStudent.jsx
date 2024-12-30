@@ -35,7 +35,7 @@ const AddStudent = ({ student }) => {
     e.preventDefault();
     try {
       await axios.post(
-        "https://svu-payment-system.onrender.com/api/admin/students/add",
+        "http://localhost:5000/api/admin/students/add",
         formData,
         {
           headers: {

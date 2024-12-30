@@ -46,7 +46,7 @@ const StudentProfile = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        "https://svu-payment-system.onrender.com/api/students/profile",
+        "http://localhost:5000/api/students/profile",
         studentData,
         {
           headers: {

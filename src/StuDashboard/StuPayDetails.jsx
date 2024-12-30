@@ -63,7 +63,7 @@ const StuPayDetails = () => {
 
     try {
       const order = await axios.post(
-        "https://svu-payment-system.onrender.com/api/students/payments/make",
+        "http://localhost:5000/api/students/payments/make",
         { amount, categoryId: selectedCategory._id },
         {
           headers: {
@@ -101,7 +101,7 @@ const StuPayDetails = () => {
 
           try {
             await axios.post(
-              "https://svu-payment-system.onrender.com/api/students/payments/verify",
+              "http://localhost:5000/api/students/payments/verify",
               paymentData,
               {
                 headers: {

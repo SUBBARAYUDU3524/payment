@@ -26,14 +26,11 @@ const StudentList = () => {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(
-        `https://svu-payment-system.onrender.com/api/admin/students/${userId}`,
-        {
-          headers: {
-            "x-auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
+      await axios.delete(`http://localhost:5000/api/admin/students/${userId}`, {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      });
       setStudents(students.filter((student) => student._id !== userId));
     } catch (error) {
       console.error("Error deleting student:", error);
@@ -97,7 +94,7 @@ const StudentList = () => {
     try {
       if (editStudent) {
         await axios.put(
-          `https://svu-payment-system.onrender.com/api/admin/students/${editStudent._id}`,
+          `http://localhost:5000/api/admin/students/${editStudent._id}`,
           formData,
           {
             headers: {
@@ -107,7 +104,7 @@ const StudentList = () => {
         );
       } else {
         await axios.post(
-          "https://svu-payment-system.onrender.com/api/admin/students/add",
+          "http://localhost:5000/api/admin/students/add",
           formData,
           {
             headers: {

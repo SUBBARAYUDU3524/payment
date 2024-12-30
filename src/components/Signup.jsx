@@ -31,7 +31,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "https://svu-payment-system.onrender.com/api/auth/signup",
+        "http://localhost:5000/api/auth/signup",
         formData
       );
       console.log(res.data);
@@ -51,7 +51,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "https://svu-payment-system.onrender.com/api/auth/admin/signup",
+        "http://localhost:5000/api/auth/admin/signup",
         formData
       );
       console.log(res.data);

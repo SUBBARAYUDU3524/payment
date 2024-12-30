@@ -30,7 +30,7 @@ function AdminProfileComponent() {
     try {
       if (isEditing) {
         await axios.put(
-          `https://svu-payment-system.onrender.com/api/admin/profile/${currentId}`,
+          `http://localhost:5000/api/admin/profile/${currentId}`,
           form,
           {
             headers: {
@@ -40,15 +40,11 @@ function AdminProfileComponent() {
         );
         setIsEditing(false);
       } else {
-        await axios.post(
-          "https://svu-payment-system.onrender.com/api/admin/profile",
-          form,
-          {
-            headers: {
-              "x-auth-token": localStorage.getItem("token"),
-            },
-          }
-        );
+        await axios.post("http://localhost:5000/api/admin/profile", form, {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        });
       }
       setForm({ name: "", email: "", phone: "", password: "", secretKey: "" });
       fetchAdmins();
@@ -67,14 +63,11 @@ function AdminProfileComponent() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(
-        `https://svu-payment-system.onrender.com/api/admin/profile/${id}`,
-        {
-          headers: {
-            "x-auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
+      await axios.delete(`http://localhost:5000/api/admin/profile/${id}`, {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      });
       fetchAdmins();
     } catch (error) {
       console.error("Error deleting admin:", error);

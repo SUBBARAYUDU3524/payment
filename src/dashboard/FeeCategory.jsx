@@ -19,14 +19,11 @@ const FeeCategory = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/category",
-        {
-          headers: {
-            "x-auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
+      const response = await axios.get("http://localhost:5000/api/category", {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      });
       setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -43,7 +40,7 @@ const FeeCategory = () => {
     if (isEditing) {
       try {
         await axios.put(
-          `https://svu-payment-system.onrender.com/api/category/${currentId}`,
+          `http://localhost:5000/api/category/${currentId}`,
           formData,
           {
             headers: {
@@ -58,15 +55,11 @@ const FeeCategory = () => {
       }
     } else {
       try {
-        await axios.post(
-          "https://svu-payment-system.onrender.com/api/category",
-          formData,
-          {
-            headers: {
-              "x-auth-token": localStorage.getItem("token"),
-            },
-          }
-        );
+        await axios.post("http://localhost:5000/api/category", formData, {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        });
       } catch (error) {
         console.error("Error adding category:", error);
       }
@@ -83,14 +76,11 @@ const FeeCategory = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(
-        `https://svu-payment-system.onrender.com/api/category/${id}`,
-        {
-          headers: {
-            "x-auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
+      await axios.delete(`http://localhost:5000/api/category/${id}`, {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      });
       fetchCategories();
     } catch (error) {
       console.error("Error deleting category:", error);

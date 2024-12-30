@@ -48,7 +48,7 @@ const Forms = () => {
     setStudentLoading(true);
     try {
       const res = await axios.post(
-        "https://svu-payment-system.onrender.com/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         studentData
       );
       const { token, user, payments, fees } = res.data;
@@ -72,7 +72,7 @@ const Forms = () => {
     setAdminLoading(true);
     try {
       const res = await axios.post(
-        "https://svu-payment-system.onrender.com/api/auth/admin/login",
+        "http://localhost:5000/api/auth/admin/login",
         adminData
       );
       const { token, admin } = res.data;

@@ -20,7 +20,7 @@ const MyProfile = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `https://svu-payment-system.onrender.com/api/admin/profile/${adminid}`,
+        `http://localhost:5000/api/admin/profile/${adminid}`,
         form,
         {
           headers: {

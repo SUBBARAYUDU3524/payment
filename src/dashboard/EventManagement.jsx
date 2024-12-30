@@ -20,9 +20,7 @@ const EventManagement = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/events"
-      );
+      const response = await axios.get("http://localhost:5000/api/events");
       setEvents(response.data);
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -45,9 +43,7 @@ const EventManagement = () => {
 
   const handleDeleteEvent = async (eventId) => {
     try {
-      await axios.delete(
-        `https://svu-payment-system.onrender.com/api/events/${eventId}`
-      );
+      await axios.delete(`http://localhost:5000/api/events/${eventId}`);
       setEvents(events.filter((event) => event._id !== eventId));
     } catch (error) {
       console.error("Error deleting event:", error);
@@ -62,7 +58,7 @@ const EventManagement = () => {
     };
     try {
       const response = await axios.post(
-        "https://svu-payment-system.onrender.com/api/events",
+        "http://localhost:5000/api/events",
         newEvent
       );
       setEvents([...events, response.data]);

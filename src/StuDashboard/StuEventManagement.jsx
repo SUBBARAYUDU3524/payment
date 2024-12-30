@@ -10,9 +10,7 @@ const StuEventManagement = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/events"
-      );
+      const response = await axios.get("http://localhost:5000/api/events");
       setEvents(response.data);
     } catch (error) {
       console.error("Error fetching events:", error);

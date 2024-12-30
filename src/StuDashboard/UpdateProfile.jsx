@@ -25,7 +25,7 @@ const UpdateProfile = () => {
     const fetchStudentData = async () => {
       try {
         const response = await axios.get(
-          "https://svu-payment-system.onrender.com/api/students/profile",
+          "http://localhost:5000/api/students/profile",
           {
             headers: {
               "y-auth-token": localStorage.getItem("studenttoken"),
@@ -50,7 +50,7 @@ const UpdateProfile = () => {
     setLoading(true);
     try {
       const response = await axios.put(
-        "https://svu-payment-system.onrender.com/api/students/profile",
+        "http://localhost:5000/api/students/profile",
         formData,
         {
           headers: {

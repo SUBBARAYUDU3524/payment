@@ -24,7 +24,7 @@ export const AdminProvider = ({ children }) => {
   const fetchStudents = async () => {
     try {
       const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/admin/students",
+        "http://localhost:5000/api/admin/students",
         {
           headers: {
             "x-auth-token": localStorage.getItem("token"),
@@ -41,7 +41,7 @@ export const AdminProvider = ({ children }) => {
   const fetchAdmins = async () => {
     try {
       const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/admin/profile",
+        "http://localhost:5000/api/admin/profile",
         {
           headers: {
             "x-auth-token": localStorage.getItem("token"),
@@ -60,7 +60,7 @@ export const AdminProvider = ({ children }) => {
   const fetchProfile = async () => {
     try {
       const response = await axios.get(
-        `https://svu-payment-system.onrender.com/api/admin/profile/${adminid}`,
+        `http://localhost:5000/api/admin/profile/${adminid}`,
         {
           headers: {
             "x-auth-token": localStorage.getItem("token"),
@@ -75,7 +75,7 @@ export const AdminProvider = ({ children }) => {
   const fetchPayments = async () => {
     try {
       const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/payments/all10"
+        "http://localhost:5000/api/payments/all10"
       );
       setPayments(response.data.items);
     } catch (error) {
@@ -85,7 +85,7 @@ export const AdminProvider = ({ children }) => {
   const fetchPaymentsadmin = async () => {
     try {
       const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/payments/recentadmin"
+        "http://localhost:5000/api/payments/recentadmin"
       );
       setPaymentsadmin(response.data);
       setLoading(false);
@@ -98,7 +98,7 @@ export const AdminProvider = ({ children }) => {
   const fetchCategoryTotalAmount = async () => {
     try {
       const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/category/studentcategoryadmin",
+        "http://localhost:5000/api/category/studentcategoryadmin",
         {
           headers: {
             "x-auth-token": localStorage.getItem("token"),

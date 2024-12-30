@@ -13,7 +13,7 @@ const StuFeeDetails = () => {
       try {
         const studentId = JSON.parse(localStorage.getItem("user")).id;
         const response = await axios.get(
-          `https://svu-payment-system.onrender.com/api/students/fees/${studentId}`,
+          `http://localhost:5000/api/students/fees/${studentId}`,
           {
             headers: {
               "y-auth-token": localStorage.getItem("studenttoken"),

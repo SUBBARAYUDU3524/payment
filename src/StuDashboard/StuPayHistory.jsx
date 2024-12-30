@@ -26,7 +26,7 @@ const StuPayHistory = () => {
   ) => {
     try {
       const response = await axios.get(
-        `https://svu-payment-system.onrender.com/api/payments/details/${paymentIntentId}`,
+        `http://localhost:5000/api/payments/details/${paymentIntentId}`,
         {
           headers: {
             "y-auth-token": localStorage.getItem("studenttoken"),

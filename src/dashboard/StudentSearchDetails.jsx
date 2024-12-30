@@ -14,7 +14,7 @@ const StudentDetails = () => {
     setStudentData(null); // Clear previous data before searching
     try {
       const response = await axios.get(
-        `https://svu-payment-system.onrender.com/api/student/${admissionNo}`
+        `http://localhost:5000/api/student/${admissionNo}`
       );
       setStudentData(response.data);
     } catch (err) {

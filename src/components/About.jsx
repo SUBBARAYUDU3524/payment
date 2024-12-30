@@ -30,9 +30,10 @@ const About = () => {
             Meet the Team
           </h3>
           <ul className="text-lg space-y-2">
-            <li className="text-glow">Alakunta Mallikarjuna</li>
-            <li className="text-glow">Pallapu Suresh</li>
-            <li className="text-glow">Vadhyar Sai Charan</li>
+            <li className="text-glow">JAKEER SHAREEF</li>
+            <li className="text-glow">BHAVYA SAI</li>
+            <li className="text-glow">U.RAJESH</li>
+            <li className="text-glow">R.VENKATESWAR REDDY</li>
           </ul>
         </div>
       </div>

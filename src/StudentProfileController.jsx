@@ -16,7 +16,7 @@ const StudentProfileProvider = ({ children }) => {
   const fetchStudentProfile = async () => {
     try {
       const res = await axios.get(
-        "https://svu-payment-system.onrender.com/api/students/profile",
+        "http://localhost:5000/api/students/profile",
         {
           headers: {
             "y-auth-token": localStorage.getItem("studenttoken"),
@@ -33,7 +33,7 @@ const StudentProfileProvider = ({ children }) => {
     try {
       const studentId = JSON.parse(localStorage.getItem("user")).id;
       const response = await axios.get(
-        `https://svu-payment-system.onrender.com/api/students/fees/${studentId}`,
+        `http://localhost:5000/api/students/fees/${studentId}`,
         {
           headers: {
             "y-auth-token": localStorage.getItem("studenttoken"),
@@ -58,7 +58,7 @@ const StudentProfileProvider = ({ children }) => {
     try {
       const studentId = JSON.parse(localStorage.getItem("user")).id;
       const response = await axios.get(
-        `https://svu-payment-system.onrender.com/api/students/history/${studentId}`,
+        `http://localhost:5000/api/students/history/${studentId}`,
         {
           headers: {
             "y-auth-token": localStorage.getItem("studenttoken"),
@@ -74,7 +74,7 @@ const StudentProfileProvider = ({ children }) => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "https://svu-payment-system.onrender.com/api/category/studentcategory",
+        "http://localhost:5000/api/category/studentcategory",
         {
           headers: {
             "y-auth-token": localStorage.getItem("studenttoken"),
