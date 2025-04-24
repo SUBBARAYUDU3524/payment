@@ -19,6 +19,7 @@ const StudentList = () => {
     phone: "",
     password: "",
   });
+  const [filter, setFilter] = useState("All");
 
   useEffect(() => {
     fetchStudents();
@@ -120,6 +121,11 @@ const StudentList = () => {
     }
   };
 
+  const filteredStudents =
+    filter === "All"
+      ? students
+      : students.filter((student) => student.courseName === filter);
+
   return (
     <div className="min-h-screen bg-gray-100 p-4 pl-10 pr-10">
       <div className="container mx-auto">
@@ -129,8 +135,22 @@ const StudentList = () => {
             Add Student
           </button>
         </div>
+        <div className="mb-4">
+          <label className="mr-2">Filter by Course:</label>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="px-3 py-2 border rounded-md"
+          >
+            <option value="All">All Students</option>
+            <option value="MBA">MBA</option>
+            <option value="MCA">MCA</option>
+            <option value="MCOM">MCOM</option>
+            <option value="MSC">MSC</option>
+          </select>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {students.map((student) => (
+          {filteredStudents.map((student) => (
             <div
               key={student._id}
               className="card bg-white shadow-md rounded-lg p-4 h-48"

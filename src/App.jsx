@@ -11,7 +11,6 @@ import About from "./components/About";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
 import MeetUs from "./components/MeetUs";
-import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import StuDashboard from "./StuDashboard/StuDashboard";
 import ShareComp from "./ShareComp";

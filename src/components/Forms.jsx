@@ -87,7 +87,7 @@ const Forms = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 py-20 overflow-hidden">
+    <div className="min-h-screen bg-sky-300 py-20 overflow-hidden">
       <div className="flex justify-center sm:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {/* Student Form */}

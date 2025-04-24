@@ -75,9 +75,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 py-6 flex justify-center items-center">
+    <div className="min-h-screen bg-sky-300 py-6 flex justify-center items-center">
       <div
-        className="bg-white p-8 rounded-lg shadow-md max-w-md w-full transition-transform transform hover:scale-105 overflow-y-auto"
+        className="bg-black p-8 rounded-lg shadow-md max-w-md w-full transition-transform transform hover:scale-105 overflow-y-auto"
         style={{
           maxHeight: "80vh",
           scrollbarWidth: "none",

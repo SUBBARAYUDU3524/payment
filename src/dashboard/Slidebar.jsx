@@ -95,6 +95,16 @@ const Slidebar = () => {
         { label: "Add Student", link: "/admin-dashboard/students/add" },
       ],
     },
+    {
+      icon: FaUserGraduate,
+      label: "All Courses",
+      dropdownItems: [
+        { label: "MCA", link: "/admin-dashboard/mca" },
+        { label: "MBA", link: "/admin-dashboard/mba" },
+        { label: "MSC", link: "/admin-dashboard/msc" },
+        { label: "MCOM", link: "/admin-dashboard/mcom" },
+      ],
+    },
     { icon: FaUniversity, label: "Library", link: "/admin-dashboard/library" },
     {
       icon: FaBuilding,

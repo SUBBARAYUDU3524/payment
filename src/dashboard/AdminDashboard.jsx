@@ -23,6 +23,10 @@ import Widgets from "./Widgets";
 import StudentUnpaid from "./StudentUnpaid";
 import { FaBars } from "react-icons/fa";
 import StudentSearchDetails from "./StudentSearchDetails";
+import MCA from "./MCA";
+import MBA from "./MBA";
+import MSC from "./MSC";
+import MCOM from "./MCOM";
 
 const AdminDashboard = () => {
   const { form, fetchProfile } = useContext(AdminContext);
@@ -70,6 +74,10 @@ const AdminDashboard = () => {
             <Route path="widgets/list" element={<Widgets />} />
             <Route path="unpaid" element={<StudentUnpaid />} />
             <Route path="search" element={<StudentSearchDetails />} />
+            <Route path="mca" element={<MCA />} />
+            <Route path="mba" element={<MBA />} />
+            <Route path="msc" element={<MSC />} />
+            <Route path="mcom" element={<MCOM />} />
             <Route
               path="adminrecentpayments"
               element={<AdminRecentPayments />}
