@@ -122,42 +122,6 @@ const ADashboard = () => {
             icon="user-graduate"
             bgColor="green"
           />
-          <StatCard
-            title="Today's Joining"
-            value="05"
-            icon="bug"
-            bgColor="red"
-          />
-          <StatCard
-            title="University Earning"
-            value="$3,540"
-            icon="university"
-            bgColor="teal"
-          />
-          <StatCard
-            title="Total Income"
-            value="$127,526"
-            icon="chart-line"
-            bgColor="green"
-          />
-          <StatCard
-            title="Unique Student"
-            value="457"
-            icon="chart-bar"
-            bgColor="pink"
-          />
-          <StatCard
-            title="Monthly Income"
-            value="$125"
-            icon="chart-pie"
-            bgColor="blue"
-          />
-          <StatCard
-            title="Net Profit"
-            value="$1,063"
-            icon="chart-area"
-            bgColor="gray"
-          />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-2">
           <div className="bg-white shadow-lg rounded-lg p-5 flex justify-center items-center">

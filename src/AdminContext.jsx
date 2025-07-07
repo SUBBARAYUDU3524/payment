@@ -36,7 +36,6 @@ export const AdminProvider = ({ children }) => {
       console.error("Error fetching students:", error);
     }
   };
-  console.log(students);
 
   const fetchAdmins = async () => {
     try {

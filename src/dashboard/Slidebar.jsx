@@ -42,11 +42,7 @@ const Slidebar = () => {
       label: "Dashboard",
       link: "/admin-dashboard/dashboard",
     },
-    {
-      icon: FaRupeeSign,
-      label: "Student Payments",
-      link: "/admin-dashboard/payment",
-    },
+
     {
       icon: FaRupeeSign,
       label: "Student All Payments",

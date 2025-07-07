@@ -1,31 +1,34 @@
-import React, { useRef } from "react";
-import emailjs from "emailjs-com";
+import React, { useRef, useState } from "react";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
   const form = useRef();
+  const [loading, setLoading] = useState(false);
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true
 
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAIL_SERVICE_KEY,
-        import.meta.env.VITE_EMAIL_TEMPLATE_ID,
-        form.current,
-        import.meta.env.VITE_EMAIL_EXTRA_KEY
-      )
-      .then(
-        (result) => {
-          console.log("SUCCESS!", result.text);
-          toast.success("Email sent successfully!"); // Display success toast
-        },
-        (error) => {
-          console.log("FAILED...", error.text);
-          toast.error("Failed to send email."); // Display error toast
-        }
+    const formData = {
+      user_name: form.current.user_name.value,
+      user_email: form.current.user_email.value,
+      message: form.current.message.value,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/send-email",
+        formData
       );
+      alert("email send successfully");
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      alert("email send successfully."); // Display error toast
+    } finally {
+      setLoading(false); // Set loading to false
+    }
   };
 
   return (
@@ -75,11 +78,15 @@ const Contact = () => {
           className="text-sm p-3 mb-4 border border-gray-600 rounded bg-gray-800 text-white"
         ></textarea>
 
-        <input
+        <button
           type="submit"
-          value="Send"
-          className="cursor-pointer bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
-        />
+          className={`cursor-pointer bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          disabled={loading}
+        >
+          {loading ? "Sending..." : "Send"}
+        </button>
       </form>
 
       <ToastContainer />
